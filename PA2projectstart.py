@@ -18,25 +18,24 @@ def show_scores():
     score_file = open("score_file.txt","x")
     score_file.write(points)
     points = 0
+    username = input("Please enter your username:")
+    score_file.write(username)
 
 
 def play_quiz(filename):
     print(filename.readline())
     while line != ",\n":
-        line = filename.readline()
+        line = (filename.readline())
     input("")
-    if input != filename.readline():
+    if input != (filename.readline()):
         input("Error please try again:")
-    if input == filename.readline():
+    if input == (filename.readline()):
         points = +1
-        for i in filename.read():
+        for i in filename:
+            (filename.read())
         
     
     
-
-def add_scores():
-    print("add_scores function called")
-
 
 def print_error():
     print("*"*50)
@@ -57,7 +56,6 @@ def main():
 
     while game_on:
         print("welcome to the review game")
-        
         while first_choice not in e_options:# first runs bc first_choice == "", then because they haven't said exit
             for item in initial_choices:
                 print(f"- {item}")
@@ -76,8 +74,6 @@ def main():
                 else:
                     file_url = quiz_fn+".txt"
                 play_quiz(file_url)
-                add_scores()
-            elif first_choice in h_options:#looking at scores
                 show_scores()
             elif first_choice in e_options:#exiting
                 game_on = False
