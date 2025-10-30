@@ -1,41 +1,39 @@
 '''
-Make a flashcard review game that reads through a file
-where each line consists of a term and its definition.
-
-An example text file and an example CSV file have been provided to you.
-
-A masterful program includes the ability to create a new file
-and load your own terms/definitions into it, before running the quiz on that file.
-
-Save game records to a different file. Log username and high score.
-Allow the user the option to view this file by printing it to the console.
-
-You should at minimum edit the helper functions.
-You may not necessarily have to edit the main function.
+Katherine James PA2
+This is a flashcard app that you can insert files and it will return questions to you and check your answer
+WWW: I am proud of how I learned and now understand .split and .strip
+If I had more time I would make it so you could create a file/deck in the program
 '''
 
-def show_scores():
-    score_file = open("score_file.txt","x")
-    score_file.write(points)
-    points = 0
-    username = input("Please enter your username:")
-    score_file.write(username)
-
+points = 0
 
 def play_quiz(filename):
-    print(filename.readline())
-    while line != ",\n":
-        line = (filename.readline())
-    input("")
-    if input != (filename.readline()):
-        input("Error please try again:")
-    if input == (filename.readline()):
-        points = +1
-        for i in filename:
-            (filename.read())
-        
+    with open(filename) as f: #f is file name so swap name for f and delete read line as cursor moves on
+        for x in f:
+            line = x.split(",") 
+            print(line[0])
+            answer = input("Enter answer: ")
+            if answer == line[1].strip("\n"):
+                print("Correct!")
+                points += 1
+            else:
+                print("That is incorrect!")
     
+       
+#def see_history(history):
+    #history = open("history.txt","x")
+    #username = input("Please enter your username: ")
+    #history.write(username)
+    #history.write(points)
     
+def add_scores(new_score):
+    points = new_score
+    score_file = open("score_file.txt","x")
+    score_file.write(new_score)
+    
+def show_scores(score_file):
+    print(score_file)
+
 
 def print_error():
     print("*"*50)
@@ -55,43 +53,39 @@ def main():
     game_on = True
 
     while game_on:
-        print("welcome to the review game")
+        print("Welcome to the review game")
         while first_choice not in e_options:# first runs bc first_choice == "", then because they haven't said exit
             for item in initial_choices:
                 print(f"- {item}")
-            first_choice = input("what would you like to do?\n> ").lower().strip()#Function options
+            first_choice = input("What would you like to do?\n> ").lower()#Function options
             if first_choice in p_options:
-                quiz_fn = input("what is the name of your file?\n> ").lower().strip()#Enter file
-                quiz_ext = input("is it a .txt or .csv file?\n> ").lower().strip()#File type
+                quiz_fn = input("What is the name of your file?\n> ").lower().strip()#Enter file
+                quiz_ext = input("Is it a .txt or .csv file?\n> ").lower().strip()#File type
                 while quiz_ext not in file_types:#error
                     print_error()
-                    print("your choices are:")#Prints choices
+                    print("Your choices are:")#Prints choices
                     for item in file_types:
                         print(f"- {item}")
-                    quiz_ext = input("is it a .txt or .csv file?\n> ").lower().strip()#file type
+                    quiz_ext = input("Is it a .txt or .csv file?\n> ").lower().strip()#file type
                 if quiz_ext in [".csv","csv"]:
                     file_url = quiz_fn+".csv"
                 else:
                     file_url = quiz_fn+".txt"
-                play_quiz(file_url)
-                show_scores()
+                user_score = play_quiz(file_url) #int score
+                show_scores(user_score)
             elif first_choice in e_options:#exiting
                 game_on = False
+            elif first_choice in h_options:
+                history = open("history.txt","a")
+                username = input("Please enter your username: ")
+                history.write(f"{username} : {points}\n")
+                h = open("history.txt")
+                print(h.read())
             else:#Error
+
                 print_error()
-        
+            
         print("Goodbye!")
 
 main()
     
-'''
-Sunday night study hall, start:
-- add quizing/flash card program
-- add program for correct and incorrect answers
-- loop back to start
-- delete print of functions such as play quiz function
-- edit helper functions (play, exit etc.)
-- create quiz file
-- quiz file must have the same character seperating word and solution
-- add title to txt
-'''
